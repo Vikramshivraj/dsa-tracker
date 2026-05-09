@@ -31,7 +31,14 @@ const io = new Server(server, {
 
 
 // MIDDLEWARE
-app.use(cors());
+app.use(
+  cors({
+    origin:
+      "https://dsa-tracker-vert-six.vercel.app",
+
+    credentials: true,
+  })
+);
 
 app.use(express.json());
 
