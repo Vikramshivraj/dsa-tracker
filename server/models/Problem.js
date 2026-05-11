@@ -12,6 +12,17 @@ const problemSchema = new mongoose.Schema(
       enum: ["Easy", "Medium", "Hard"],
       required: true,
     },
+        description: {
+      type: String,
+    },
+
+    leetcodeLink: {
+      type: String,
+    },
+
+    youtubeLink: {
+      type: String,
+    },
 
     tags: {
       type: [String],

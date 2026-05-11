@@ -10,12 +10,25 @@ const Admin = () => {
     localStorage.getItem("user")
   );
 
-  const [formData, setFormData] = useState({
-    title: "",
-    difficulty: "Easy",
-    tags: "",
-    points: "",
-  });
+  const [formData, setFormData] =
+    useState({
+
+      title: "",
+
+      difficulty: "Easy",
+
+      description: "",
+
+      leetcodeLink: "",
+
+      youtubeLink: "",
+
+      tags: "",
+
+      points: "",
+
+    });
+
 
   const handleChange = (e) => {
 
@@ -26,33 +39,59 @@ const Admin = () => {
 
   };
 
+
   const handleSubmit = async (e) => {
 
     e.preventDefault();
 
+    console.log("FORM SUBMITTED");
+
+    console.log(formData);
+
     try {
 
-      const res = await API.post(
-        "/problems",
-        {
-          ...formData,
-          tags: formData.tags.split(","),
-          role: user.role,
-        }
-      );
+      const payload = {
+
+  ...formData,
+
+  tags: formData.tags.split(","),
+
+  role: user.role,
+
+};
+
+console.log(payload);
+
+const res = await API.post(
+  "/problems",
+  payload
+);
 
       toast.success(
         "Problem Added Successfully 🚀"
       );
 
       setFormData({
+
         title: "",
+
         difficulty: "Easy",
+
+        description: "",
+
+        leetcodeLink: "",
+
+        youtubeLink: "",
+
         tags: "",
+
         points: "",
+
       });
 
     } catch (error) {
+
+      console.log(error);
 
       toast.error(
         error.response?.data?.message
@@ -61,7 +100,9 @@ const Admin = () => {
     }
   };
 
+
   return (
+
     <div className="text-white max-w-2xl mx-auto">
 
       <h1 className="text-5xl font-bold mb-10 text-center">
@@ -69,6 +110,7 @@ const Admin = () => {
         Admin Panel ⚡
 
       </h1>
+
 
       <form
         onSubmit={handleSubmit}
@@ -83,6 +125,7 @@ const Admin = () => {
           onChange={handleChange}
           className="w-full bg-zinc-800 p-4 rounded-xl outline-none"
         />
+
 
         <select
           name="difficulty"
@@ -99,6 +142,37 @@ const Admin = () => {
 
         </select>
 
+
+        <textarea
+          name="description"
+          placeholder="Problem Description"
+          value={formData.description}
+          onChange={handleChange}
+          className="w-full bg-zinc-800 p-4 rounded-xl outline-none"
+          rows="4"
+        />
+
+
+        <input
+          type="text"
+          name="leetcodeLink"
+          placeholder="LeetCode Problem Link"
+          value={formData.leetcodeLink}
+          onChange={handleChange}
+          className="w-full bg-zinc-800 p-4 rounded-xl outline-none"
+        />
+
+
+        <input
+          type="text"
+          name="youtubeLink"
+          placeholder="YouTube Solution Link"
+          value={formData.youtubeLink}
+          onChange={handleChange}
+          className="w-full bg-zinc-800 p-4 rounded-xl outline-none"
+        />
+
+
         <input
           type="text"
           name="tags"
@@ -107,6 +181,7 @@ const Admin = () => {
           onChange={handleChange}
           className="w-full bg-zinc-800 p-4 rounded-xl outline-none"
         />
+
 
         <input
           type="number"
@@ -117,7 +192,9 @@ const Admin = () => {
           className="w-full bg-zinc-800 p-4 rounded-xl outline-none"
         />
 
+
         <button
+          type="submit"
           className="w-full bg-green-500 hover:bg-green-600 py-4 rounded-xl text-xl font-semibold transition-all"
         >
 
@@ -128,6 +205,7 @@ const Admin = () => {
       </form>
 
     </div>
+
   );
 };
 

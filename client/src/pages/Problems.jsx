@@ -20,6 +20,12 @@ const Problems = () => {
   const [loading, setLoading] =
     useState(true);
 
+  const [search, setSearch] =
+  useState("");
+
+  const [difficultyFilter,
+  setDifficultyFilter] =
+    useState("All");
 
   // FETCH PROBLEMS
   useEffect(() => {
@@ -148,7 +154,31 @@ const Problems = () => {
 
     );
   }
+const filteredProblems =
+  problems.filter((problem) => {
 
+    const matchesSearch =
+      problem.title
+        .toLowerCase()
+        .includes(
+          search.toLowerCase()
+        );
+
+    const matchesDifficulty =
+
+      difficultyFilter === "All"
+
+      ||
+
+      problem.difficulty ===
+      difficultyFilter;
+
+    return (
+      matchesSearch &&
+      matchesDifficulty
+    );
+
+  });
 
   return (
     <div className="text-white">
@@ -159,8 +189,42 @@ const Problems = () => {
         DSA Problems 💻
 
       </h1>
+        <div className="flex flex-col md:flex-row gap-4 mb-8">
+
+  <input
+    type="text"
+    placeholder="Search Problems 🔍"
+    value={search}
+    onChange={(e) =>
+      setSearch(e.target.value)
+    }
+
+    className="flex-1 bg-zinc-900 p-4 rounded-xl outline-none"
+  />
 
 
+  <select
+    value={difficultyFilter}
+    onChange={(e) =>
+      setDifficultyFilter(
+        e.target.value
+      )
+    }
+
+    className="bg-zinc-900 p-4 rounded-xl outline-none"
+  >
+
+    <option>All</option>
+
+    <option>Easy</option>
+
+    <option>Medium</option>
+
+    <option>Hard</option>
+
+  </select>
+
+</div>
       {/* PROBLEMS GRID */}
       <div className="grid sm:grid-cols-2 xl:grid-cols-3 gap-6">
 
@@ -178,7 +242,7 @@ const Problems = () => {
 
         ) : (
 
-          problems.map((problem) => (
+          filteredProblems.map((problem) => (
 
             <div
               key={problem._id}
@@ -220,7 +284,36 @@ const Problems = () => {
                 </span>
 
               </div>
+            <p className="text-zinc-400 mb-5 leading-relaxed">
+             {problem.description}
+              </p>
+              <div className="flex gap-3 mb-5 flex-wrap">
 
+                  {problem.leetcodeLink && (
+
+                    <a
+                      href={problem.leetcodeLink}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="bg-yellow-500 hover:bg-yellow-600 px-4 py-2 rounded-lg text-sm font-semibold transition-all"
+                    >
+                     LeetCode
+                      </a>
+)}
+  {problem.youtubeLink && (
+    <a
+      href={problem.youtubeLink}
+      target="_blank"
+      rel="noreferrer"
+      className="bg-red-500 hover:bg-red-600 px-4 py-2 rounded-lg text-sm font-semibold transition-all"
+    >
+      Watch Solution
+
+    </a>
+
+  )}
+
+</div>
 
               {/* TAGS */}
               <div className="flex flex-wrap gap-2 mb-6">

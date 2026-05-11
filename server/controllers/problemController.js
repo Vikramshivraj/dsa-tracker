@@ -6,14 +6,24 @@ const addProblem = async (req, res) => {
 
   try {
 
-    const { title, difficulty, tags, points } =
-      req.body;
-
+    const {
+  title,
+  difficulty,
+  description,
+  leetcodeLink,
+  youtubeLink,
+  tags,
+  points,
+} = req.body;
+  console.log(req.body);
     const problem = await Problem.create({
       title,
-      difficulty,
-      tags,
-      points,
+  difficulty,
+  description,
+  leetcodeLink,
+  youtubeLink,
+  tags,
+  points,
     });
 
     res.status(201).json(problem);
@@ -92,6 +102,7 @@ const solveProblem = async (req, res) => {
     }
 
     user.streak += 1;
+     user.solvedProblems.push(problem._id);
     await user.save();
     const io = req.app.get("io");
     io.emit("leaderboardUpdated");
@@ -99,7 +110,7 @@ const solveProblem = async (req, res) => {
   user: user.name,
   problem: problem.title,
 });
-    user.solvedProblems.push(problem._id);
+   
 
     res.status(200).json({
       message: "Problem Solved",
@@ -141,4 +152,5 @@ module.exports = {
   getProblems,
   solveProblem,
   deleteProblem,
+
 };

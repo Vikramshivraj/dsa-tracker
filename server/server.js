@@ -33,8 +33,7 @@ const io = new Server(server, {
 // MIDDLEWARE
 app.use(
   cors({
-    origin:
-      "https://dsa-tracker-vert-six.vercel.app",
+    origin: "https://dsa-tracker-vert-six.vercel.app",
 
     credentials: true,
   })

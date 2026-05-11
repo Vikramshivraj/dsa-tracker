@@ -1,69 +1,94 @@
 import { useEffect, useState } from "react";
+
 import API from "../services/api";
+
 import socket from "../services/socket";
 
 const Leaderboard = () => {
 
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] =
+    useState([]);
 
-  const [search, setSearch] = useState("");
+  const [search, setSearch] =
+    useState("");
 
   useEffect(() => {
 
-  fetchLeaderboard();
+    fetchLeaderboard();
 
-  socket.on(
-    "leaderboardUpdated",
-    () => {
+    socket.on(
+      "leaderboardUpdated",
+      () => {
 
-      fetchLeaderboard();
+        fetchLeaderboard();
 
-    }
-  );
+      }
+    );
 
-  return () => {
+    return () => {
 
-    socket.off("leaderboardUpdated");
+      socket.off(
+        "leaderboardUpdated"
+      );
 
-  };
+    };
 
-}, []);
+  }, []);
 
-  const fetchLeaderboard = async () => {
 
-    try {
+  const fetchLeaderboard =
+    async () => {
 
-      const res = await API.get("/leaderboard");
+      try {
 
-      setUsers(res.data);
+        const res = await API.get(
+          "/leaderboard"
+        );
 
-    } catch (error) {
+        setUsers(res.data);
 
-      console.log(error);
+      } catch (error) {
 
-    }
-  };
+        console.log(error);
 
-  const filteredUsers = users.filter((user) =>
-    user.name.toLowerCase().includes(
-      search.toLowerCase()
-    )
-  );
+      }
+    };
+
+
+  const filteredUsers =
+    users.filter((user) =>
+
+      user.name
+        .toLowerCase()
+        .includes(
+          search.toLowerCase()
+        )
+
+    );
+
 
   return (
-    <div className="text-white">
 
-      <div className="flex justify-between items-center mb-8">
+    <div className="text-white max-w-6xl mx-auto">
 
-        <h1 className="text-4xl font-bold">
+      {/* HEADER */}
+
+      <div className="flex flex-col md:flex-row justify-between items-center gap-4 mb-10">
+
+        <h1 className="text-5xl font-bold">
+
           Leaderboard 🏆
+
         </h1>
+
 
         <input
           type="text"
           placeholder="Search user..."
-          className="bg-zinc-900 px-4 py-2 rounded-lg outline-none"
+          className="bg-zinc-900 px-5 py-3 rounded-xl outline-none w-full md:w-80"
+
           value={search}
+
           onChange={(e) =>
             setSearch(e.target.value)
           }
@@ -71,88 +96,183 @@ const Leaderboard = () => {
 
       </div>
 
-      <div className="overflow-x-auto">
 
-        <table className="w-full bg-zinc-900 rounded-2xl overflow-hidden">
+      {/* LEADERBOARD */}
 
-          <thead className="bg-zinc-800 text-left">
+      <div className="space-y-5">
 
-            <tr>
+        {filteredUsers.map(
+          (user, index) => (
 
-              <th className="p-4">Rank</th>
+            <div
+              key={user._id}
 
-              <th className="p-4">Name</th>
+              className={`
 
-              <th className="p-4">Score</th>
+                flex items-center justify-between
 
-              <th className="p-4">Easy</th>
+                bg-zinc-900
 
-              <th className="p-4">Medium</th>
+                p-5 rounded-2xl
 
-              <th className="p-4">Hard</th>
+                shadow-lg
 
-              <th className="p-4">Streak</th>
+                transition-all duration-300
 
-            </tr>
+                hover:scale-[1.02]
 
-          </thead>
+                ${
+                  index === 0
+                    ? "border-2 border-yellow-400"
+                    : index === 1
+                    ? "border-2 border-zinc-400"
+                    : index === 2
+                    ? "border-2 border-orange-500"
+                    : ""
+                }
 
-          <tbody>
+              `}
+            >
 
-            {filteredUsers.map((user) => (
+              {/* LEFT */}
 
-              <tr
-                key={user._id}
-                className="border-b border-zinc-800 hover:bg-zinc-800 transition-all"
-              >
+              <div className="flex items-center gap-5">
 
-                <td className="p-4 font-bold">
+                <div className="text-3xl font-bold">
 
-                  {user.rank === 1
+                  {index === 0
                     ? "🥇"
-                    : user.rank === 2
+                    : index === 1
                     ? "🥈"
-                    : user.rank === 3
+                    : index === 2
                     ? "🥉"
-                    : user.rank}
+                    : `#${index + 1}`}
 
-                </td>
+                </div>
 
-                <td className="p-4">
-                  {user.name}
-                </td>
 
-                <td className="p-4 text-green-400 font-bold">
+                <div>
+
+                  <h2 className="text-2xl font-bold">
+
+                    {user.name}
+
+                  </h2>
+
+                  <p className="text-zinc-400 mt-1">
+
+                    {user.totalSolved}
+                    {" "}
+                    Problems Solved
+
+                  </p>
+
+                </div>
+
+              </div>
+
+
+              {/* RIGHT */}
+
+              <div className="text-right">
+
+                <p className="text-3xl font-bold text-green-400">
+
                   {user.score}
-                </td>
 
-                <td className="p-4">
-                  {user.easySolved}
-                </td>
+                </p>
 
-                <td className="p-4">
-                  {user.mediumSolved}
-                </td>
+                <p className="text-zinc-400 text-sm">
 
-                <td className="p-4">
-                  {user.hardSolved}
-                </td>
+                  Points
 
-                <td className="p-4">
-                  🔥 {user.streak}
-                </td>
+                </p>
 
-              </tr>
+              </div>
 
-            ))}
 
-          </tbody>
+              {/* EXTRA STATS */}
 
-        </table>
+              <div className="hidden lg:flex gap-8 text-center">
+
+                <div>
+
+                  <p className="text-green-400 font-bold text-xl">
+
+                    {user.easySolved}
+
+                  </p>
+
+                  <p className="text-zinc-400 text-sm">
+
+                    Easy
+
+                  </p>
+
+                </div>
+
+
+                <div>
+
+                  <p className="text-yellow-400 font-bold text-xl">
+
+                    {user.mediumSolved}
+
+                  </p>
+
+                  <p className="text-zinc-400 text-sm">
+
+                    Medium
+
+                  </p>
+
+                </div>
+
+
+                <div>
+
+                  <p className="text-red-400 font-bold text-xl">
+
+                    {user.hardSolved}
+
+                  </p>
+
+                  <p className="text-zinc-400 text-sm">
+
+                    Hard
+
+                  </p>
+
+                </div>
+
+
+                <div>
+
+                  <p className="text-orange-400 font-bold text-xl">
+
+                    🔥 {user.streak}
+
+                  </p>
+
+                  <p className="text-zinc-400 text-sm">
+
+                    Streak
+
+                  </p>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          )
+        )}
 
       </div>
 
     </div>
+
   );
 };
 
