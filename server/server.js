@@ -27,6 +27,7 @@ const io = new Server(server, {
 origin: [
   "http://localhost:5173",
   "https://dsa-tracker-vert-six.vercel.app",
+  "https://dsa-tracker-preg4ky6c-vickys-projects-08ead40c.vercel.app",
 ],    methods: ["GET", "POST", "PUT"],
   },
 });
@@ -37,7 +38,8 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",
-      "https://dsa-tracker-vert-six.vercel.app"
+      "https://dsa-tracker-vert-six.vercel.app",
+      "https://dsa-tracker-preg4ky6c-vickys-projects-08ead40c.vercel.app",
     ],
     credentials: true,
   })
