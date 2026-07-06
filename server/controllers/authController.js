@@ -25,10 +25,15 @@ const registerUser = async (req, res) => {
       password: hashedPassword,
     });
 
-    res.status(201).json({
-      message: "User registered successfully",
-      user,
-    });
+   res.status(201).json({
+  message: "User registered successfully",
+  user: {
+    _id: user._id,
+    name: user.name,
+    email: user.email,
+    role: user.role,
+  },
+});
 
   } catch (error) {
     res.status(500).json({
@@ -63,19 +68,35 @@ const loginUser = async (req, res) => {
       });
     }
 
-    const token = jwt.sign(
-      { id: user._id },
-      process.env.JWT_SECRET,
-      {
-        expiresIn: "7d",
-      }
-    );
+   const token = jwt.sign(
+  {
+    id: user._id,
+    role: user.role,
+  },
+  process.env.JWT_SECRET,
+  {
+    expiresIn: "7d",
+  }
+);
 
-    res.status(200).json({
-      message: "Login successful",
-      token,
-      user,
-    });
+const userResponse = {
+  _id: user._id,
+  name: user.name,
+  email: user.email,
+  totalSolved: user.totalSolved,
+  easySolved: user.easySolved,
+  mediumSolved: user.mediumSolved,
+  hardSolved: user.hardSolved,
+  streak: user.streak,
+  score: user.score,
+  role: user.role,
+};
+
+res.status(200).json({
+  message: "Login successful",
+  token,
+  user: userResponse,
+});
 
   } catch (error) {
     res.status(500).json({

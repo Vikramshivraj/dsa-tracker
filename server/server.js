@@ -24,8 +24,10 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: "https://dsa-tracker-vert-six.vercel.app",
-    methods: ["GET", "POST", "PUT"],
+origin: [
+  "http://localhost:5173",
+  "https://dsa-tracker-vert-six.vercel.app",
+],    methods: ["GET", "POST", "PUT"],
   },
 });
 
@@ -33,8 +35,10 @@ const io = new Server(server, {
 // MIDDLEWARE
 app.use(
   cors({
-    origin: "https://dsa-tracker-vert-six.vercel.app",
-
+    origin: [
+      "http://localhost:5173",
+      "https://dsa-tracker-vert-six.vercel.app"
+    ],
     credentials: true,
   })
 );

@@ -82,11 +82,8 @@ const Problems = () => {
     try {
 
       const res = await API.put(
-        `/problems/solve/${id}`,
-        {
-          userId: user._id,
-        }
-      );
+  `/problems/solve/${id}`
+);
 
       // UPDATE LOCAL STORAGE
       localStorage.setItem(
@@ -118,11 +115,6 @@ const Problems = () => {
 
       await API.delete(
         `/problems/${id}`,
-        {
-          data: {
-            role: user.role,
-          },
-        }
       );
 
       toast.success(

@@ -6,10 +6,6 @@ import toast from "react-hot-toast";
 
 const Admin = () => {
 
-  const user = JSON.parse(
-    localStorage.getItem("user")
-  );
-
   const [formData, setFormData] =
     useState({
 
@@ -29,7 +25,6 @@ const Admin = () => {
 
     });
 
-
   const handleChange = (e) => {
 
     setFormData({
@@ -38,7 +33,6 @@ const Admin = () => {
     });
 
   };
-
 
   const handleSubmit = async (e) => {
 
@@ -52,20 +46,20 @@ const Admin = () => {
 
       const payload = {
 
-  ...formData,
+        ...formData,
 
-  tags: formData.tags.split(","),
+        tags: formData.tags
+          .split(",")
+          .map((tag) => tag.trim()),
 
-  role: user.role,
+      };
 
-};
+      console.log(payload);
 
-console.log(payload);
-
-const res = await API.post(
-  "/problems",
-  payload
-);
+      const res = await API.post(
+        "/problems",
+        payload
+      );
 
       toast.success(
         "Problem Added Successfully 🚀"
@@ -94,12 +88,12 @@ const res = await API.post(
       console.log(error);
 
       toast.error(
-        error.response?.data?.message
+        error.response?.data?.message ||
+        "Something went wrong"
       );
 
     }
   };
-
 
   return (
 
@@ -110,7 +104,6 @@ const res = await API.post(
         Admin Panel ⚡
 
       </h1>
-
 
       <form
         onSubmit={handleSubmit}
@@ -125,7 +118,6 @@ const res = await API.post(
           onChange={handleChange}
           className="w-full bg-zinc-800 p-4 rounded-xl outline-none"
         />
-
 
         <select
           name="difficulty"
@@ -142,7 +134,6 @@ const res = await API.post(
 
         </select>
 
-
         <textarea
           name="description"
           placeholder="Problem Description"
@@ -151,7 +142,6 @@ const res = await API.post(
           className="w-full bg-zinc-800 p-4 rounded-xl outline-none"
           rows="4"
         />
-
 
         <input
           type="text"
@@ -162,7 +152,6 @@ const res = await API.post(
           className="w-full bg-zinc-800 p-4 rounded-xl outline-none"
         />
 
-
         <input
           type="text"
           name="youtubeLink"
@@ -171,7 +160,6 @@ const res = await API.post(
           onChange={handleChange}
           className="w-full bg-zinc-800 p-4 rounded-xl outline-none"
         />
-
 
         <input
           type="text"
@@ -182,7 +170,6 @@ const res = await API.post(
           className="w-full bg-zinc-800 p-4 rounded-xl outline-none"
         />
 
-
         <input
           type="number"
           name="points"
@@ -191,7 +178,6 @@ const res = await API.post(
           onChange={handleChange}
           className="w-full bg-zinc-800 p-4 rounded-xl outline-none"
         />
-
 
         <button
           type="submit"
