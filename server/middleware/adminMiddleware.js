@@ -13,17 +13,3 @@ const adminMiddleware = (req, res, next) => {
 };
 
 module.exports = adminMiddleware;
-
-// const adminMiddleware = (req, res, next) => {
-
-//    if(req.user.role!=="admin"){
-
-//       return res.status(403).json({
-//           message:"Access Denied"
-//       });
-
-//    }
-
-//    next();
-
-// }

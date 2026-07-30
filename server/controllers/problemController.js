@@ -25,8 +25,9 @@ const addProblem = async (req, res) => {
 
     res.status(201).json(problem);
   } catch (error) {
+    console.error(error);
     res.status(500).json({
-      message: error.message,
+      message: "Something went wrong",
     });
   }
 };
@@ -37,8 +38,9 @@ const getProblems = async (req, res) => {
 
     res.status(200).json(problems);
   } catch (error) {
+    console.error(error);
     res.status(500).json({
-      message: error.message,
+      message: "Something went wrong",
     });
   }
 };
@@ -48,14 +50,11 @@ const solveProblem = async (req, res) => {
     const problem = await Problem.findById(req.params.id);
     const user = await User.findById(req.user._id);
 
-    // ✅ Check first
     if (!problem || !user) {
       return res.status(404).json({
         message: "Not Found",
       });
     }
-
-    // ✅ Then check if already solved
     const alreadySolved = user.solvedProblems.includes(
       problem._id.toString()
     );
@@ -82,7 +81,7 @@ const solveProblem = async (req, res) => {
     }
 
     user.streak += 1;
-    user.solvedProblems.push(problem._id);
+    user.solvedProblems.push(problem._id.toString());
 
     await user.save();
 
@@ -100,23 +99,25 @@ const solveProblem = async (req, res) => {
       user,
     });
   } catch (error) {
+    console.error(error);
     res.status(500).json({
-      message: error.message,
+      message: "Something went wrong",
     });
   }
 };
 
 const deleteProblem = async (req, res) => {
   try {
-    await Problem.findByIdAndDelete(req.params.id);
-
-    res.status(200).json({
-      message: "Problem Deleted",
-    });
+    const problem = await Problem.findByIdAndDelete(req.params.id);
+    
+    if (!problem) {
+      return res.status(404).json({ message: "Problem not found" });
+    }
+    
+    res.status(200).json({ message: "Problem Deleted" });
   } catch (error) {
-    res.status(500).json({
-      message: error.message,
-    });
+    console.error(error);
+    res.status(500).json({ message: "Something went wrong" });
   }
 };
 

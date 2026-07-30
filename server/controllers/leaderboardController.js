@@ -13,8 +13,9 @@ const getLeaderboard = async (req, res) => {
 
     res.status(200).json(rankedUsers);
   } catch (error) {
+    console.error(error);
     res.status(500).json({
-      message: error.message,
+      message: "Something went wrong",
     });
   }
 };
