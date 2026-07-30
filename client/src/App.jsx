@@ -10,6 +10,7 @@ import Leaderboard from "./pages/Leaderboard";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import Problems from "./pages/Problems";
 import Admin from "./pages/Admin";
+import AdminRoute from "./routes/AdminRoute";
 
 function App() {
   return (
@@ -35,7 +36,14 @@ function App() {
 
           <Route path="/leaderboard" element={<Leaderboard />} />
           <Route path="/problems" element={<Problems />} />
-          <Route path="/admin" element={<Admin />} />
+          <Route
+  path="/admin"
+  element={
+    <AdminRoute>
+      <Admin />
+    </AdminRoute>
+  }
+/>
 
         </Routes>
       </div>
