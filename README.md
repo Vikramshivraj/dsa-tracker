@@ -1,16 +1,6 @@
 # 🚀 DSA Tracker
 
-A full-stack MERN application to track DSA progress, manage coding problems, compete on real-time leaderboards, and analyze coding performance with interactive dashboards.
-
----
-
-# 🌐 Live Demo
-
-Frontend:  
-[DSA Tracker Frontend](https://dsa-tracker-vert-six.vercel.app?utm_source=chatgpt.com)
-
-Backend:  
-[DSA Tracker Backend](https://dsa-tracker-backend-63fv.onrender.com?utm_source=chatgpt.com)
+A full-stack MERN application to track DSA progress, manage coding problems, compete on real-time leaderboards, and analyse coding performance with interactive dashboards.
 
 ---
 
@@ -170,27 +160,6 @@ cd server
 npm install
 ```
 
----
-
-# 🔑 Environment Variables
-
-## Client `.env`
-
-```env
-VITE_API_URL=your_backend_url/api
-VITE_SOCKET_URL=your_backend_url
-```
-
-## Server `.env`
-
-```env
-PORT=5000
-MONGO_URI=your_mongodb_connection_string
-JWT_SECRET=your_secret_key
-```
-
----
-
 # ▶️ Run Project
 
 ## Frontend
@@ -233,9 +202,5 @@ npm start
 
 ---
 
----
-
-# ⭐ Support
-
 If you like this project, give it a star on GitHub ⭐
-Last updated on July 2026.
+Last updated 1 Aug 2026.
