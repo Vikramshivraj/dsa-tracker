@@ -284,11 +284,8 @@ npm run dev
 
 ### Login Page
 
-```
-Screenshot Here
 <img width="1883" height="866" alt="image" src="https://github.com/user-attachments/assets/7a141afa-608c-431f-b198-fc2a31130ce0" />
 
-```
 
 ### Dashboard
 
