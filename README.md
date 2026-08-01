@@ -289,35 +289,34 @@ npm run dev
 
 ### Dashboard
 
-```
+
 Screenshot Here
 <img width="1886" height="833" alt="image" src="https://github.com/user-attachments/assets/b2ba54d8-b751-4f71-948a-633b25db343f" />
 
-```
+
 
 ### Problems Page
 
-```
+
 Screenshot Here
 <img width="1868" height="830" alt="image" src="https://github.com/user-attachments/assets/4b8213b7-8dd6-4985-84d0-f10c54a8473b" />
 
-```
+
 
 ### Leaderboard
 
-```
+
 Screenshot Here
 <img width="1886" height="862" alt="image" src="https://github.com/user-attachments/assets/dcdd9635-013e-48e1-ad97-3cd38913bf37" />
 
-```
 
 ### Admin Panel
 
-```
+
 Screenshot Here
 <img width="1105" height="848" alt="image" src="https://github.com/user-attachments/assets/df9bd044-5489-4fe1-a225-0170f55b1fa7" />
 
-```
+
 
 ---
 
@@ -384,7 +383,7 @@ This project helped me gain hands-on experience with:
 
 ## Vikram Singh
 
-**B.Tech Electronics & Telecommunication**
+**B.E Electronics & Telecommunication**
 
 **MERN Stack Developer | DSA Enthusiast**
 
